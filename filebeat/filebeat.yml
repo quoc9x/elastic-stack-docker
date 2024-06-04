@@ -17,6 +17,20 @@ filebeat.inputs:
   scan_frequency: 3s
   fields_under_root: true
 
+
+filebeat.autodiscover:
+  providers:
+    - type: docker
+      templates:
+        - condition:
+            contains:
+              docker.container.image: redis
+          config:
+            - type: container
+              paths:
+                - /var/lib/docker/containers/${data.docker.container.id}/*.log
+              exclude_lines: ["^\\s+[\\-`('.|_]"]  # drop asciiart lines
+
 output.logstash:
   enabled: true
   hosts: ["logstash01:5044"]
