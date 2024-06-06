@@ -17,6 +17,28 @@ filebeat.inputs:
   scan_frequency: 3s
   fields_under_root: true
 
+- type: log
+  paths:
+    - ingest_data/nginx-access-log.log
+  fields:
+    project:
+      name: nginx
+  scan_frequency: 3s
+  fields_under_root: true
+
+
+filebeat.autodiscover:
+  providers:
+    - type: docker
+      templates:
+        - condition:
+            # contains:
+            #   container.image: "modest_torvalds"
+          config:
+            - type: log
+              paths:
+                - /var/lib/docker/containers/${data.docker.container.id}/*.log
+
 output.logstash:
   enabled: true
   hosts: ["logstash01:5044"]

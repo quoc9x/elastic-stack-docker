@@ -187,9 +187,9 @@ services:
     volumes:
       - certs:/usr/share/filebeat/certs
       - filebeatdata01:/usr/share/filebeat/data
-      - "./filebeat_ingest_data/:/usr/share/filebeat/ingest_data/"
+      - "./log_ingest_data/:/usr/share/filebeat/ingest_data/"
       - "./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro"
-      - "/var/lib/docker/containers:/var/lib/docker/containers:ro"
+      - "/workspace/.docker-root/containers/:/var/lib/docker/containers:ro"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     environment:
       - ELASTIC_USER=elastic
@@ -197,8 +197,8 @@ services:
       - ELASTIC_HOSTS=https://es01:9200
       - KIBANA_HOSTS=http://kibana:5601
       - LOGSTASH_HOSTS=http://logstash01:9600
-    # command:
-    #   - --strict.perms=false
+    command:
+      - --strict.perms=false
 
   logstash01:
     depends_on:
@@ -213,7 +213,7 @@ services:
     volumes:
       - certs:/usr/share/logstash/certs
       - logstashdata01:/usr/share/logstash/data
-      - "./logstash_ingest_data/:/usr/share/logstash/ingest_data/"
+      - "./log_ingest_data/:/usr/share/logstash/ingest_data/"
       - "./logstash/pipeline/:/usr/share/logstash/pipeline/:ro"
       - "./logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml:ro"
     environment:
