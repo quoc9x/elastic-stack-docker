@@ -32,8 +32,8 @@ filebeat.autodiscover:
     - type: docker
       templates:
         - condition:
-            # contains:
-            #   container.image: "modest_torvalds"
+            contains:
+              container.name: "golang-devops"
           config:
             - type: log
               paths:
