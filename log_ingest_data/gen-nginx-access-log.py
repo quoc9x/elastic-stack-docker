@@ -27,6 +27,11 @@ ip_list = ['192.168.1.1', '192.168.1.2', '192.168.1.3', '192.168.1.4', '192.168.
 # create a list of user agent strings to use in the log lines
 user_agents = ['Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:54.0) Gecko/20100101 Firefox/54.0', 'Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; AS; rv:11.0) like Gecko', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36 OPR/45.0.2552.898', 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:54.0) Gecko/20100101 Firefox/54.0', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36']
 
+ip_public_list = ['192.168.1.1', '192.168.1.2', '192.168.1.3', '192.168.1.4', '192.168.1.5',
+                 '192.168.56.1', '192.168.52.1']
+
+request_time_list = ['0.001', '0.001', '0.002', '0.002', '0.0015', '0.002', '0.001', '0.005', '0.005']
+
 args = parser.parse_args()
 
 # open the log file in write mode and create log lines using the specified number of lines
@@ -41,6 +46,8 @@ with open(args.filename, 'w') as f:
         status_code = random.choice([200, 201, 204, 301, 302, 400, 401, 403, 404, 500])
         size = random.randint(100, 10000)
         user_agent = random.choice(user_agents)
+        x_forward_for = random.choice(ip_public_list)
+        request_time = random.choice(request_time_list)
         # create the log line with the chosen values and write it to the file
-        line = f"{ip} - - [{timestamp}] \"{method} {url} {protocol}\" {status_code} {size} \"{refurl}\" \"{user_agent}\"\n"
+        line = f"{ip} - - [{timestamp}] \"{method} {url} {protocol}\" {status_code} {size} \"{refurl}\" \"{user_agent}\" \"{x_forward_for}\" {request_time}\n"
         f.write(line)
