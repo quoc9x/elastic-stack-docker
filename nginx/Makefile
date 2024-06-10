@@ -1,6 +1,6 @@
-.PHONY: u d
+.PHONY: up d
 
-u:
+up:
 	docker compose -p nginx up -d
 
 d:

@@ -34,11 +34,25 @@ request_time_list = ['0.001', '0.001', '0.002', '0.002', '0.0015', '0.002', '0.0
 
 args = parser.parse_args()
 
+# Create random timestamp
+current_time = time.time()
+one_hour_ago = current_time - 3600  # 3600 second = 1 hour
+time_array = []
+for i in range(args.lines):
+    random_time = one_hour_ago + random.random() * (current_time - one_hour_ago)
+    random_time_struct = time.localtime(random_time)
+    time_array.append(random_time_struct)
+
+time_array.sort()
+
 # open the log file in write mode and create log lines using the specified number of lines
 with open(args.filename, 'w') as f:
     for i in range(args.lines):
         ip = random.choice(ip_list)
-        timestamp = time.strftime('%d/%b/%Y:%H:%M:%S %z', time.localtime())
+
+        
+        timestamp = time.strftime('%d/%b/%Y:%H:%M:%S %z', time_array[i])
+
         method = random.choice(['GET', 'POST', 'PUT', 'DELETE'])
         url = '/' + ''.join(random.choices('abcdefghijklmnopqrstuvwxyz', k=random.randint(1, 10)))
         refurl = random.choice(['https://www.example.com/','https://www.google.com/','https://www.ibm.com/','https://www.msn.com/'])
