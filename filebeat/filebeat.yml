@@ -33,7 +33,7 @@ filebeat.autodiscover:
       templates:
         - condition:
             contains:
-              container.name: "golang-devops"
+              container.name: "nginx-web"
           config:
             - type: log
               paths:

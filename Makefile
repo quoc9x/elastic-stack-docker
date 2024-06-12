@@ -9,5 +9,5 @@ clear:
 
 # Generate nginx access log
 gen:
-	python log_ingest_data/gen-nginx-access-log.py --filename log_ingest_data/nginx-access-log.log --lines 500
+	python log_ingest_data/gen-nginx-access-log.py --filename log_ingest_data/nginx-access-log.log --lines 2000
 

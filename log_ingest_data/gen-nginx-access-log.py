@@ -36,7 +36,7 @@ args = parser.parse_args()
 
 # Create random timestamp
 current_time = time.time()
-one_hour_ago = current_time - 3600  # 3600 second = 1 hour
+one_hour_ago = current_time - 7200  # 3600 second = 1 hour
 time_array = []
 for i in range(args.lines):
     random_time = one_hour_ago + random.random() * (current_time - one_hour_ago)
