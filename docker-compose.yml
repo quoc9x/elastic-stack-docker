@@ -11,6 +11,8 @@ volumes:
     driver: local
   filebeatdata01:
     driver: local
+  heartbeatdata01:
+    driver: local
   logstashdata01:
     driver: local
 
@@ -191,6 +193,25 @@ services:
       - "./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro"
       - "/workspace/.docker-root/containers/:/var/lib/docker/containers:ro"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    environment:
+      - ELASTIC_USER=elastic
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
+      - ELASTIC_HOSTS=https://es01:9200
+      - KIBANA_HOSTS=http://kibana:5601
+      - LOGSTASH_HOSTS=http://logstash01:9600
+    command:
+      - --strict.perms=false
+
+  heartbeat01:
+    depends_on:
+      es01:
+        condition: service_healthy
+    image: docker.elastic.co/beats/heartbeat:${STACK_VERSION}
+    user: root
+    volumes:
+      - certs:/usr/share/heartbeat/certs
+      - heartbeatdata01:/usr/share/heartbeat/data
+      - "./heartbeat/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml:ro"
     environment:
       - ELASTIC_USER=elastic
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
