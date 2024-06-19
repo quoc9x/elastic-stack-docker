@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:8.0.35
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+      - ./mysql-log:/var/log/mysql
+      - ./config/conf.d:/etc/mysql/conf.d
+    networks:
+      - mysql-network
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+    restart: always
+
+networks:
+  mysql-network:
+    driver: bridge

@@ -1,0 +1,20 @@
+[mysqld]
+ bind-address = 0.0.0.0 # make sure to bind it to all IPs, else mysql listens on 127.0.0.1
+ server-id = 101
+
+ # Bin log
+ log_bin = mysql-bin.log
+
+ # General log
+ #general_log = 1
+ #general_log_file = /var/log/mysql/mysql-general.log
+
+ # Slow log
+ slow_query_log = 1
+ slow_query_log_file = /var/log/mysql/mysql-slow.log
+ long_query_time = 2
+
+ # Error log
+ log_error = /var/log/mysql/mysql-error.log
+
+[mysql]
