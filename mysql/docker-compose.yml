@@ -9,13 +9,13 @@ services:
       - ./mysql-log:/var/log/mysql
       - ./config/conf.d:/etc/mysql/conf.d
     networks:
-      - mysql-network
+      - elastic
     ports:
       - 3306:3306
     environment:
       - MYSQL_ROOT_PASSWORD=123456
     restart: always
 
-networks:
-  mysql-network:
-    driver: bridge
+# networks:
+#   mysql-network:
+#     driver: bridge

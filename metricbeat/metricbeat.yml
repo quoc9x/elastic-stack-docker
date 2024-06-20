@@ -42,6 +42,12 @@ metricbeat.modules:
   period: 10s
   enabled: true
 
+- module: mysql
+  metricsets: ["status"]
+  hosts: ["tcp(mysql:3306)/"]
+  username: root
+  password: 123456
+
 processors:
   - add_host_metadata: ~
   - add_docker_metadata: ~

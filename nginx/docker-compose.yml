@@ -7,5 +7,7 @@ services:
     - ./content:/usr/share/nginx/html
     - ./config/nginx.conf:/etc/nginx/nginx.conf
     - ./config/conf.d:/etc/nginx/conf.d
+    networks:
+      - elastic
     ports:
     - "8181:80"
